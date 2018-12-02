@@ -37,6 +37,14 @@
   (nth n (char-list string)))
 
 
+;; STRING --> INTEGER
+(defun char-length (string)
+  "Return the length of a string by character."
+
+  (length (char-list string)))
+
+
+
 ;; ----------------------------------------
 
 
@@ -73,6 +81,14 @@
   "Return a list of the positions of a character in a string."
 
   (positions character (char-list string)))
+
+
+;; CHARACTER STRING --> LIST_OF_STRINGS
+(defun char-split (character string)
+  "Split a string into a list of strings, at a set character."
+
+  (regex-split (string character)
+	       (mapcar #'string (char-list string))))
 
 
 ;; ----------------------------------------

@@ -49,18 +49,38 @@
 (defun random-item (list)
   "Return a random item from a list."
 
-  (nth (random (length list)) list))
+  (if (not list)
+    nil
+    (nth (random (length list)) list)))
+
+;; INTEGER LIST --> LIST
+(defun random-items (number list)
+  "Return an amount of random items from a list."
+
+  (if (not list)
+    nil
+    (let ((item (random-item list)))
+      (concatenate 'list
+		   (list item)
+		   (if (not (eq number 1))
+		     (random-items (- number 1) (remove item list)))))))
+
+;; FILE_PATH --> BOOLEAN
+(defun file-exists (path)
+  "Return whether or not a file exists."
+
+  (if (ignore-errors (file-author path))
+    'T
+    nil))
 
 
-;; UNIVERSAL-TIME --> ISO8601-FORMAT_TIME
-(defun iso-time (universal-time)
-  "Return `universal-time` in ISO 8601 format. :)"
+;; STREAM --> STRING_OF_ENTIRE_STREAM
+(defun read-line-entire (stream)
+  (let* ((cur-line (ignore-errors (read-line stream))))
 
-  (multiple-value-bind
-    (second minute hour date month year)
-    (decode-universal-time universal-time)
-
-    (format nil "~A-~A-~A"
-	    year
-	    (min-string-length month 2 "0")
-	    (min-string-length date 2 "0"))))
+    (cond
+      (cur-line
+	(string-combine cur-line
+			(read-line-entire stream)
+			:seperator (format nil "~%")) )
+      ('T ""))))

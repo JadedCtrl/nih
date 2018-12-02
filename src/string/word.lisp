@@ -30,6 +30,14 @@
   (word-string (nth n (word-list string))))
 
 
+;; STRING --> INTEGER
+(defun word-length (string)
+    "Return the length of a string by word."
+
+      (length (word-list string)))
+
+
+
 ;; ----------------------------------------
 
 
@@ -37,7 +45,7 @@
 (defun word-get (query string)
   "Return a word in a string that matches a regex query."
 
-  (word-car (word-get-all query string)))
+  (ignore-errors (word-car (word-get-all query string))))
 
 ;; REGEX STRING --> LIST_OF_MATCHING_WORDS
 (defun word-get-all (query string)
@@ -48,15 +56,15 @@
 
 ;; REGEX STRING --> LINES_SANS_MATCHES
 (defun word-remove (query string)
-    "Remove a word from a string that matches a regex query."
+  "Remove a word from a string that matches a regex query."
 
-      (word-string (regex-remove query (word-list string))))
+  (word-string (regex-remove query (word-list string))))
 
 ;; REGEX STRING --> LINES_SANS_MATCHES
 (defun word-remove-all (query string)
-    "Remove all words from a string that match a regex query."
+  "Remove all words from a string that match a regex query."
 
-      (word-string (regex-remove-all query (word-list string))))
+  (word-string (regex-remove-all query (word-list string))))
 
 
 ;; WORD STRING --> WORD_POS_IN_STRING
@@ -70,6 +78,12 @@
   "Return a list of positions of a word (relative to other words) in a string."
 
   (positions word (word-list string) :test #'equal))
+
+
+(defun word-split (query string)
+  "Split a string into a list, seperated by a set word matching a regex query."
+
+  (regex-split query (word-list string) " "))
 
 
 ;; ----------------------------------------

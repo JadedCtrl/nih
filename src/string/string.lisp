@@ -87,6 +87,26 @@
 	(padding "" string suffix)))))
 
 
+;; STRING INTEGER --> STRING
+(defun max-string-length (string length)
+  "Return a string by splitting it into lines, each line being length long."
+
+  (let ((stack "")
+	(i 0))
+    (loop
+      :for char
+      :across string
+      :do
+      (if (eq length i)
+	(progn
+	  (setq i 0)
+	  (setq stack
+		(nih:string-combine stack (format nil "~%~A" char))))
+	(setq stack
+	      (nih:string-combine stack (format nil "~A" char))))
+      (setq i (+ 1 i)))
+    stack))
+
 
 ;; STRING DESIRED_LENGTH [PREFIX] [SUFFIX] --> STRING_OF_DESIRED_LENGTH
 (defun min-string-length (string target-length
@@ -188,6 +208,35 @@ Example:
     stack))
 
 
+;; QUERY LIST_OF_STRINGS --> LIST_SANS_QUERY_MATCHES
+(defun regex-split (query list &optional (combiner ""))
+  "Split a string into a list, seperated by a set item matching a regex query."
+
+  (let ((stack '(""))
+	(i 0))
+
+    (loop
+      :while (< i (length list))
+      :do
+      (let ((string (nth i list))
+	    (last-string (car (reverse stack)))
+	    (stack-sans (reverse (cdr (reverse stack)))))
+
+	(cond
+	  ((ppcre:scan-to-strings query string)
+	   (setq stack (concatenate 'list stack (list ""))))
+	  ('T
+	   (setq stack (concatenate 'list stack-sans
+				    (list (string-trim combiner
+						       (string-combine
+							 last-string string
+							 :seperator combiner))))))))
+
+      (setq i (+ 1 i)))
+
+    (remove "" stack :test #'equal)))
+
+
 ;; ---------------------------------------- 
 
 
@@ -263,8 +312,46 @@ Example:
 
 
 
-  ;; STRING COLON_VARIABLE_NAME --> STRING_WITHOUT_COLON_VARIABLE
-  (defun remove-colon-values (string)
-    "Remove the colon-variable declaration from a string."
+;; STRING COLON_VARIABLE_NAME --> STRING_WITHOUT_COLON_VARIABLE
+(defun remove-colon-values (string)
+  "Remove the colon-variable declaration from a string."
 
-    (line-remove-all "^:.*" string))
+  (line-remove-all "^:.*" string))
+
+
+
+;; STRING SYMBOL STRING --> STRING
+(defun replace-colon-value (string key-string value)
+  "Replace a colon variable's value."
+
+  (let ((existent
+	  (getf (get-colon-values string) (read-from-string key-string))))
+    (if existent
+      (line-replace
+	(line-position
+	  (line-get (string-combine "^" key-string " ") string)
+	  string)
+	(string-combine key-string value :seperator " ")
+	string)
+      (string-combine :seperator (string #\Newline)
+		      string (string-combine key-string " " value)))))
+
+
+
+
+;; -------------------------------------
+;; PRIVATE HELPER FUNCTIONS
+
+
+;; INTEGER STRING STRING --> STRING
+(defun line-replace (position new-line string)
+  "Replace nth line with a new one in a string."
+
+  (let* ((line-list (nih:line-split (nih:line-nth position string) string))
+	 (modified-list
+	   (list (car line-list)
+		 new-line
+		 (nih:value-or (cadr line-list) ""))))
+
+    (reduce (lambda (a b) (nih:string-combine a b :seperator (format nil "~%")))
+	    modified-list)))

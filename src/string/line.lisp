@@ -30,6 +30,14 @@
   (nth n (line-list string)))
 
 
+;; STRING --> INTEGER
+(defun line-length (string)
+  "Return the length of a string in lines."
+
+  (length (line-list string)))
+
+
+
 ;; ----------------------------------------
 
 
@@ -70,6 +78,13 @@
   "Return a list of the positions of a line in string."
 
   (positions line (line-list string) :test #'equal))
+
+
+;; QUERY STRING --> LIST_OF_LINES_SANS_MATCHES
+(defun line-split (query string)
+    "Split a string into a list, seperated by a set line matching a regex query."
+
+      (regex-split query (line-list string) (string #\Newline)))
 
 
 ;; ----------------------------------------

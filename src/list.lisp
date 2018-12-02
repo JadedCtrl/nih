@@ -1,19 +1,19 @@
 (in-package :nih)
 
 ;; ITEM LIST --> DATA_AFTER_ITEM
-(defun following (item list)
+(defun following (item list &key (test #'eq))
   "Return all items following the first instance of ITEM"
 
-  (cdr (up-from (position item list :test #'equal) list)))
+  (cdr (up-from (position item list :test test) list)))
 
 
 ;; ITEM LIST --> DATA_UP_TO_ITEM
-(defun preceding (item list)
+(defun preceding (item list &key (test #'eq))
   "Return all items preceding the first instance of ITEM"
 
   (reverse
     (cdr (reverse
-	   (up-to (position item list :test #'equal) list)))))
+	   (up-to (position item list :test test) list)))))
 
 
 ;; ----------------------------------------
@@ -93,3 +93,71 @@
       (setq i (+ 1 i)))
 
     stack))
+
+
+;; ----------------------------------------
+
+
+;; LIST --> LIST_OF_ODD-NUMBERED_ITEMS
+(defun odds (list)
+  "Return a list only containing the odd-numbered items of a list."
+
+  (let ((stack '())
+	(i 0))
+
+    (loop
+      :while (< i (length list))
+      :do
+      (if (oddp i)
+	(setq stack (concatenate 'list stack (list (nth i list)))))
+
+      (setq i (+ 1 i)))
+
+    stack))
+
+
+;; LIST --> LIST_OF_ODD-NUMBERED_ITEMS
+(defun evens (list)
+  "Return a list only containing the even-numbered items of a list."
+
+  (let ((stack '())
+	(i 0))
+
+    (loop
+      :while (< i (length list))
+      :do
+      (if (evenp i)
+	(setq stack (concatenate 'list stack (list (nth i list)))))
+
+      (setq i (+ 1 i)))
+
+    stack))
+
+
+;; ----------------------------------------
+
+
+
+;; PLIST PLIST --> PLIST
+(defun property-list-merge (plist-a plist-b)
+  "Merge two property-lists, with plist-a being the canonical one.
+  Useful for when you have defaults (in plist-a) and modifications to
+  them (in plist-b), especially for configs."
+
+  (let* ((keys (evens plist-a))
+	 (pairs (length keys))
+	 (stack '())
+	 (i 0))
+
+    (loop
+      :while (< i pairs)
+      :do
+      (let* ((key (nth i keys))
+	     (a-value (getf plist-a key))
+	     (b-value (getf plist-b key)))
+
+	(setq stack
+	      (append stack
+		      (list key (value-or b-value a-value))))
+	(setq i (+ i 1))))
+      stack))

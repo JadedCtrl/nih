@@ -16,17 +16,20 @@
     :regex-get-all
     :regex-remove
     :regex-remove-all
+    :regex-split
 
     :nil-string
 
     :pad-string
     :min-string-length
+    :max-string-length
 
     :getf-string
     :getf-strings
 
     :get-colon-values
     :remove-colon-values
+    :replace-colon-value
 
 
     ;; STRING/WORD
@@ -41,6 +44,8 @@
     :word-remove-all
     :word-position
     :word-positions
+    :word-split
+    :word-length
 
     :word-car
     :word-caar :word-cadddrr :word-cadaar :word-cadr :word-caadr
@@ -63,6 +68,8 @@
     :line-remove-all
     :line-position
     :line-positions
+    :line-split
+    :line-length
 
     :line-car
     :line-caar :line-cadddrr :line-cadaar :line-cadr :line-caadr
@@ -83,6 +90,8 @@
     :char-remove-all
     :char-position
     :char-positions
+    :char-split
+    :char-length
 
     :char-car
     :char-caar :char-cadddrr :char-cadaar :char-cadr :char-caadr
@@ -108,13 +117,37 @@
     
     :replace-at
 
+    :odds
+    :evens
+
+    :property-list-merge
+
+
+    ;; DATE
+    ;; =======================
+    :iso-time  ;; see (local-time:format-timestring nil timestamp)
+    :get-iso-time
+    ;; see (local-time:format-timestring nil (local-time:universal-to-timestamp)
+    :iso-date-distance ;; see #'local-time:timestamp-difference
+    :day-number ;; see #'local-time:format-timestring
+    :week-number ;; see #'local-time:format-timestring
+
+
+    ;; FILE
+    ;; =======================
+    :read-file-string ;; see #'alexandria:read-file-into-string
+    :write-file-string ;; see #'alexandria:write-string-into-file
+
 
     ;; MISC
     ;; =======================
     :random-item
+    :random-items
     :iso-time
     :list-or-real
     :value-or
+    :file-exists
+    :read-line-entire
     :parse-keys))
 
 
