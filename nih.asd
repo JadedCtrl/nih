@@ -1,13 +1,15 @@
 (defsystem "nih"
-	   :version "0.1"
+	   :version "0.3"
 	   :author "Jaidyn Ann <jadedctrl@teknik.io>"
-           :license "CC 0"
-	   :depends-on ("cl-strings" "cl-ppcre")
+           :license "LGPLv3"
+	   :depends-on ("cl-strings" "asdf-encodings" "cl-ppcre")
 	   :components ((:module "src"
 			   :components
 			   ((:file "package")
 			    (:file "misc")
+			    (:file "file")
 			    (:file "list")
+			    (:file "date")
 			    (:file "string/string")
 			    (:file "string/word")
 			    (:file "string/line")

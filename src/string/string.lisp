@@ -272,6 +272,60 @@ Example:
     stack))
 
 
+;; LIST_OF_SUBLISTS STRING --> LIST_OF_SUBLISTS_WITH_STRING_AS_CAR
+(defun getf-cars (list value &key (stack '()) (test 'eq))
+  "Get items from list by an identifying string in `car`.
+  I.E., if the string is 'apple', any sublists like this:
+  ('apple' 1 2 3)
+  will be returned."
+
+  ;; just recurse through the list, adding each new matching
+  ;; item to the `stack`
+
+  (if (and (< 0 (length list)) (listp list))
+    (if (ignore-errors
+	  ;; the item might not be a list; for our purposes, let's ignore that.
+	  (funcall test
+	    (car (car list))    ;; '( ( here ) )
+	    value))
+      (getf-cars (cdr list) value
+		 :test test
+		 :stack (concatenate 'list stack (list (car list))))
+      (getf-cars (cdr list) value
+		 :stack stack
+		 :test test))
+    stack))
+
+(defun getf-car (list value &key (test 'eq))
+  (car (getf-cars list value :test test)))
+
+;; LIST_OF_SUBLISTS STRING --> LIST_OF_SUBLISTS_WITH_STRING_AS_CAR
+(defun getf-cadrs (list value &key (stack '()) (test 'eq))
+  "Get items from list by an identifying string in `car`.
+  I.E., if the string is 'apple', any sublists like this:
+  ('apple' 1 2 3)
+  will be returned."
+
+  ;; just recurse through the list, adding each new matching
+  ;; item to the `stack`
+
+  (if (and (< 0 (length list)) (listp list))
+    (if (ignore-errors
+	  ;; the item might not be a list; for our purposes, let's ignore that.
+	  (funcall test
+	    (cadr (car list))    ;; '( ( here ) )
+	    value))
+      (getf-cadrs (cdr list) value
+		 :test test
+		 :stack (concatenate 'list stack (list (car list))))
+      (getf-cadrs (cdr list) value
+		 :stack stack
+		 :test test))
+    stack))
+
+(defun getf-cadr (list value &key (test 'eq))
+  (car (getf-cadrs list value :test test)))
+
 ;; ---------------------------------------- 
 
 

@@ -27,6 +27,11 @@
     :getf-string
     :getf-strings
 
+    :getf-car
+    :getf-cars
+    :getf-cadr
+    :getf-cadrs
+
     :get-colon-values
     :remove-colon-values
     :replace-colon-value
