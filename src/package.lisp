@@ -33,6 +33,7 @@
     :getf-cadrs
 
     :get-colon-values
+    :get-colon-value
     :remove-colon-values
     :replace-colon-value
 

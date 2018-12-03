@@ -365,6 +365,12 @@ Example:
 		      (get-colon-values (line-cdr colon-lines))))))))
 
 
+;; STRING COLON_VARIABLE_NAME --> COLON_VALUE
+(defun get-colon-value (string variable)
+  "Return a value of a `colon variable`."
+
+  (getf (get-colon-values string) (read-from-string variable)))
+
 
 ;; STRING COLON_VARIABLE_NAME --> STRING_WITHOUT_COLON_VARIABLE
 (defun remove-colon-values (string)
