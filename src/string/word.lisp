@@ -116,3 +116,6 @@
 (create-string-manip word-cddr #'nih:word-list #'nih:word-string #'cddr)
 (create-string-manip word-cddaar #'nih:word-list #'nih:word-string #'cddaar)
 (create-string-manip word-cdaar #'nih:word-list #'nih:word-string #'cdaar)
+
+(create-string-manip word-reverse #'nih:word-list #'nih:word-string #'reverse)
+(create-string-manip word-last #'nih:word-list #'nih:word-string #'last)

@@ -60,6 +60,7 @@
     :word-cdddar :word-cdar :word-cdaaar :word-cddddr :word-cdddr
     :word-cdaadr :word-cdadar :word-cddadr :word-cdaddr :word-cdadr
     :word-cddar :word-cddr :word-cddaar :word-cdaar
+    :word-last :word-reverse
 
 
     ;; STRING/LINE
@@ -84,6 +85,7 @@
     :line-cdddar :line-cdar :line-cdaaar :line-cddddr :line-cdddr
     :line-cdaadr :line-cdadar :line-cddadr :line-cdaddr :line-cdadr
     :line-cddar :line-cddr :line-cddaar :line-cdaar
+    :line-last :line-reverse
 
 
     ;; STRING/CHAR
@@ -106,6 +108,7 @@
     :char-cdddar :char-cdar :char-cdaaar :char-cddddr :char-cdddr
     :char-cdaadr :char-cdadar :char-cddadr :char-cdaddr :char-cdadr
     :char-cddar :char-cddr :char-cddaar :char-cdaar
+    :char-last :char-reverse
 
 
     ;; LIST

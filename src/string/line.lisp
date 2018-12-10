@@ -117,3 +117,6 @@
 (create-string-manip line-cddr #'nih:line-list #'nih:line-string #'cddr)
 (create-string-manip line-cddaar #'nih:line-list #'nih:line-string #'cddaar)
 (create-string-manip line-cdaar #'nih:line-list #'nih:line-string #'cdaar)
+
+(create-string-manip line-reverse #'nih:line-list #'nih:line-string #'reverse)
+(create-string-manip line-last #'nih:line-list #'nih:line-string #'last)

@@ -21,8 +21,12 @@
   "Convert a list of chars into a string"
 
   (cond
-    ((eq (length char-list) 1)
-     (string (car char-list)))
+    ((eq 'STANDARD-CHAR (type-of char-list))
+     (format nil "~A" char-list))
+
+    ((eq 1 (length char-list))
+     (format nil "~A" (car char-list)))
+
     ('T
      (reduce
        (lambda (char-a char-b)
@@ -121,3 +125,6 @@
 (create-string-manip char-cddr #'nih:char-list #'nih:char-string #'cddr)
 (create-string-manip char-cddaar #'nih:char-list #'nih:char-string #'cddaar)
 (create-string-manip char-cdaar #'nih:char-list #'nih:char-string #'cdaar)
+
+(create-string-manip char-last #'nih:char-list #'nih:char-string #'last)
+(create-string-manip char-reverse #'nih:char-list #'nih:char-string #'reverse)
