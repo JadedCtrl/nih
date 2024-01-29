@@ -24,6 +24,8 @@ than that-- and everything has tests! :)
 USAGE
 ----------------------------------------
 
+[Note, 2024: I’m keeping this repo here for archival reasons; I discourage actual use of this project!]
+
 I mean... it's a library. Use a function you like. Or not. =w=
 But here's my logic with the string manipulation functions:
 
@@ -104,5 +106,5 @@ BORING STUFF
 ----------------------------------------
 
 License is in COPYING.txt (GNU LGPLv3~! <3)
-Author is Jaidyn Ann <jadedctrl@teknik.io>
-Sauce is at https://git.eunichx.us/nih
+Author is Jaidyn Ann <jadedctrl@posteo.at>
+Sauce is at https://hak.xwx.moe/jadedctrl/nih
